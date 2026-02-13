@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.IO.Pipes;
+﻿
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -33,7 +30,6 @@ namespace WebServer.Server
         public HttpServer(int port, Action<IRoutingTable> routes)
             : this("127.0.0.1", port, routes)
         {
-
         }
 
         public HttpServer(Action<IRoutingTable> routingTable)
@@ -54,15 +50,15 @@ namespace WebServer.Server
                 var requestText = this.ReadRequest(networkStream);
                 Console.WriteLine(requestText);
                 var request = Request.Parse(requestText);
-                var response = this.routingTable.MatchRequest(request);
+                var response = routingTable.MatchRequest(request);
                 WriteResponse(networkStream, response);
                 connection.Close();
             }
         }
         private void WriteResponse(NetworkStream networkStream, Response response)
         {
-            var resposeBytes = Encoding.UTF8.GetBytes(response.ToString());
-            networkStream.Write(resposeBytes);
+            var responseBytes = Encoding.UTF8.GetBytes(response.ToString());
+            networkStream.Write(responseBytes);
         }
 
         private string ReadRequest(NetworkStream networkStream)

@@ -1,4 +1,5 @@
 ﻿using WebServer.Server;
+using WebServer.Server.Responses;
 
 namespace WebServer.demo
 {
@@ -6,9 +7,11 @@ namespace WebServer.demo
     {
         static void Main(string[] args)
         {
-            var server = new HttpServer("127.0.0.1", 8080);
-            server.Start();
-            
+            new HttpServer(routes => routes
+            .MapGet("/", new TextResponse("Hello from the server!"))
+            .MapGet("/html", new HtmlResponse("<h1>HTML response</h1>"))
+            .MapGet("/Redirect", new RedirectResponse("https://softuni.org/")))
+            .Start();
         }
     }
 }
