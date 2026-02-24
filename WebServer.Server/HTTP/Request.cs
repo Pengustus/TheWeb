@@ -13,7 +13,6 @@ namespace WebServer.Server.HTTP_Request
         public string Url { get; private set; }
         public HeaderCollection Headers { get; private set; }
         public string Body { get; private set; }
-
         public IReadOnlyDictionary<string, string> FromData { get; private set; } = new Dictionary<string, string>();
 
         public static Request Parse(string request)
